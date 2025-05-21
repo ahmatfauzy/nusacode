@@ -1,12 +1,16 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
+// import { AppWrapper } from "./AppWrapper";
+import { LanguageProvider } from "./components/context/LaguageContext";
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
+      <LanguageProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </LanguageProvider>
     </>
   );
 }
