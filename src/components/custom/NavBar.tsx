@@ -12,7 +12,7 @@ import {
 } from "../ui/resizable-navbar";
 import { useState, useEffect, useRef } from "react";
 import { IconSearch, IconChevronDown, IconX } from "@tabler/icons-react";
-import { useLanguage } from "../context/LaguageContext";
+import { useLanguage } from "../context/LanguageContext";
 
 // Define the dataWisata type
 interface TourismData {
@@ -145,7 +145,7 @@ export function NavBar() {
 
   return (
     <div className="relative w-full">
-      <Navbar className="fixed top-0">
+      <Navbar className="fixed top-0 py-2">
         {/* Desktop Navigation */}
         <NavBody>
           <NavbarLogo />
@@ -176,7 +176,7 @@ export function NavBar() {
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 dark:bg-neutral-800">
                   <div className="py-1">
-                    <p className="px-4 py-2 text-xs text-gray-500 dark:text-gray-400">
+                    <p className="px-4 py-2 text-xs text-gray-500">
                       {t("selectLanguage")}
                     </p>
                     <button
@@ -187,7 +187,7 @@ export function NavBar() {
                       }}
                       className={`w-full text-left px-4 py-2 text-sm ${
                         language === "id"
-                          ? "bg-gray-100 dark:bg-neutral-700"
+                          ? "bg-gray-100 dark:bg-neutral-700 text-gray-400"
                           : ""
                       }`}
                     >
@@ -201,7 +201,7 @@ export function NavBar() {
                       }}
                       className={`w-full text-left px-4 py-2 text-sm ${
                         language === "en"
-                          ? "bg-gray-100 dark:bg-neutral-700"
+                          ? "bg-gray-100 dark:bg-neutral-700 text-gray-400"
                           : ""
                       }`}
                     >
@@ -302,7 +302,7 @@ export function NavBar() {
               }
               value={searchQuery}
               onChange={handleSearch}
-              className="w-full pl-10 pr-4 py-3 border border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-3 border border-gray-700 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
             />
           </div>
 

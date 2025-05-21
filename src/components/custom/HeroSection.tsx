@@ -1,5 +1,5 @@
 "use client";
-import { useLanguage } from "../context/LaguageContext";
+import { useLanguage } from "../context/LanguageContext";
 
 export function HeroSection() {
   const { language } = useLanguage();

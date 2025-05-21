@@ -1,6 +1,8 @@
 import { Background } from "../components/ui/background";
 import { NavBar } from "../components/custom/NavBar";
 import { HeroSection } from "../components/custom/HeroSection";
+import { HeroWhy } from "../components/custom/HeroWhy";
+import { AppleCardsCarouselDemo } from "../components/custom/AppleCardsCarouselDemo";
 
 function Home() {
   return (
@@ -12,6 +14,8 @@ function Home() {
       <NavBar />
       <div >
         <HeroSection />
+        <HeroWhy />
+        <AppleCardsCarouselDemo />
       </div>
 
     </>
