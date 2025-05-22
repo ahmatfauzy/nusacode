@@ -9,7 +9,7 @@ export function HeroSection() {
     id: {
       title: "Jelajahi Roadmap Developer Terlengkap",
       subtitle:
-        "Temukan alur belajar terstruktur untuk menjadi Frontend, Backend, DevOps, Mobile Developer, dan banyak lagi. Semua dalam satu tempat.",
+        "Temukan alur belajar terstruktur untuk menjadi Web Developer, DevOps, Mobile Developer, dan banyak lagi. Semua dalam satu tempat.",
       cta: "Lihat Roadmap",
       features: [
         "Visual Interaktif",
@@ -21,7 +21,7 @@ export function HeroSection() {
     en: {
       title: "Explore Complete Developer Roadmaps",
       subtitle:
-        "Discover structured learning paths to become a Frontend, Backend, DevOps, Mobile Developer, and more — all in one place.",
+        "Discover structured learning paths to become a Web Developer, DevOps, Mobile Developer, and more — all in one place.",
       cta: "View Roadmap",
       features: [
         "Interactive Visuals",

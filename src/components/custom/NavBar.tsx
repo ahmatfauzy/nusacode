@@ -13,6 +13,7 @@ import {
 import { useState, useEffect, useRef } from "react";
 import { IconSearch, IconChevronDown, IconX } from "@tabler/icons-react";
 import { useLanguage } from "../context/LanguageContext";
+import { cn } from "../../lib/utils";
 
 // Define the dataWisata type
 interface TourismData {
@@ -25,15 +26,14 @@ interface TourismData {
   maps: string;
 }
 
-// Sample empty data array (you should replace this with your actual data)
 const dataWisata: TourismData[] = [];
 
-// Translation dictionary
 const translations = {
   id: {
     home: "Beranda",
     roadmap: "Peta Belajar",
     articles: "Artikel",
+    about: "Tentang", 
     search: "Cari",
     indonesia: "Indonesia",
     english: "Inggris",
@@ -43,6 +43,7 @@ const translations = {
     home: "Home",
     roadmap: "RoadMap",
     articles: "Articles",
+    about: "About",
     search: "Search",
     indonesia: "Indonesian",
     english: "English",
@@ -58,15 +59,14 @@ export function NavBar() {
   const [searchResults, setSearchResults] = useState<TourismData[]>([]);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { language, setLanguage } = useLanguage();
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Create translation function
   const t = (key: string) => {
     return translations[language as keyof typeof translations][
       key as keyof (typeof translations)["id"]
     ];
   };
 
-  // Get localized nav items
   const getNavItems = () => [
     {
       name: t("home"),
@@ -80,9 +80,12 @@ export function NavBar() {
       name: t("articles"),
       link: "/articles",
     },
+    {
+      name: t("about"),
+      link: "/about",
+    },
   ];
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = () => {
       setIsDropdownOpen(false);
@@ -97,12 +100,28 @@ export function NavBar() {
     };
   }, [isDropdownOpen]);
 
-  // Focus search input when search overlay opens
   useEffect(() => {
     if (isSearchOpen && searchInputRef.current) {
       searchInputRef.current.focus();
     }
   }, [isSearchOpen]);
+
+  // Add scroll event listener to detect scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // Handle search
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,11 +172,18 @@ export function NavBar() {
           <div className="flex items-center gap-4">
             <NavbarButton
               variant="secondary"
-              className="flex items-center"
+              className={cn(
+                "flex items-center transition-all duration-300",
+                isScrolled ? "pr-2" : "pr-4"
+              )}
               onClick={toggleSearch}
             >
               <IconSearch className="mr-2" size={18} />
-              {t("search")}
+              {!isScrolled && (
+                <span className="transition-opacity duration-200">
+                  {t("search")}
+                </span>
+              )}
             </NavbarButton>
 
             <div className="relative">

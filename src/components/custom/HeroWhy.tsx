@@ -14,7 +14,7 @@ export const HeroHighlight = ({
 }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  
+
   function handleMouseMove({
     currentTarget,
     clientX,
@@ -25,16 +25,18 @@ export const HeroHighlight = ({
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
   }
-  
+
   return (
     <div
       className={cn(
         "group relative flex h-[24rem] w-full max-w-none items-center justify-center bg-white dark:bg-black",
-        containerClassName,
+        containerClassName
       )}
       onMouseMove={handleMouseMove}
     >
-      <div className={cn("relative z-20 w-full leading-tight", className)}>{children}</div>
+      <div className={cn("relative z-20 w-full leading-tight", className)}>
+        {children}
+      </div>
     </div>
   );
 };
@@ -67,7 +69,7 @@ export const Highlight = ({
       }}
       className={cn(
         `relative inline-block rounded-lg bg-gradient-to-r from-indigo-300 to-purple-300 px-1 pb-1 dark:from-indigo-500 dark:to-purple-500`,
-        className,
+        className
       )}
     >
       {children}
@@ -81,7 +83,6 @@ import { useLanguage } from "../context/LanguageContext";
 export function HeroWhy() {
   const { language } = useLanguage();
 
-  // Teks berdasarkan bahasa
   const text = {
     id: {
       pre: "Dari ide hingga penerapan. NusaCode memetakan perjalanan koding Anda. ",
@@ -94,7 +95,9 @@ export function HeroWhy() {
   };
 
   return (
-    <HeroHighlight>
+    <HeroHighlight
+      containerClassName="!bg-gray-700/10" 
+    >
       <motion.h1
         initial={{
           opacity: 0,
@@ -108,12 +111,10 @@ export function HeroWhy() {
           duration: 0.5,
           ease: [0.4, 0.0, 0.2, 1],
         }}
-        className="text-2xl md:text-4xl lg:text-4xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-snug text-center mx-auto"
+        className="text-2xl md:text-4xl lg:text-4xl font-bold text-white max-w-4xl leading-snug text-center mx-auto"
       >
         {text[language].pre}
-        <Highlight className="text-black dark:text-white">
-          {text[language].highlight}
-        </Highlight>
+        <Highlight className="text-white">{text[language].highlight}</Highlight>
       </motion.h1>
     </HeroHighlight>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { Carousel, Card } from "../ui/apple-cards-carousel";
-import { useLanguage } from "../context/LanguageContext"; 
+import { useLanguage } from "../context/LanguageContext";
 
 export function AppleCardsCarouselDemo() {
   const { language } = useLanguage();
@@ -70,10 +70,6 @@ function getLocalizedData(lang: "id" | "en") {
       img: "https://i.pinimg.com/736x/49/41/25/4941258842f77827937365c8db712e9b.jpg",
     },
     {
-      id: "devops",
-      img: "https://i.pinimg.com/736x/e3/fb/11/e3fb11f24770b83f500a7f8964bf9836.jpg",
-    },
-    {
       id: "ml",
       img: "https://i.pinimg.com/736x/ec/87/08/ec8708762c834ac8124c74ebaf2ce346.jpg",
     },
@@ -84,14 +80,12 @@ function getLocalizedData(lang: "id" | "en") {
       web: "Jalur Menjadi Web Developer",
       mobile: "Jalur Menjadi Mobile Developer",
       data: "Jalur Menjadi Data Analyst",
-      devops: "Jalur Menjadi DevOps Engineer",
       ml: "Jalur Menjadi Machine Learning Engineer",
     },
     en: {
       web: "Path to Become a Web Developer",
       mobile: "Path to Become a Mobile Developer",
       data: "Path to Become a Data Analyst",
-      devops: "Path to Become a DevOps Engineer",
       ml: "Path to Become a Machine Learning Engineer",
     },
   };
