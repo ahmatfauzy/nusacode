@@ -31,7 +31,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full border-t bg-white dark:bg-black border-neutral-200 dark:border-neutral-700 py-10">
+    <footer className="w-full border-t bg-white dark:bg-black border-neutral-200 dark:border-neutral-600 py-10">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
         {/* logo */}
         <div className="flex items-center gap-2 text-neutral-700 dark:text-neutral-200">

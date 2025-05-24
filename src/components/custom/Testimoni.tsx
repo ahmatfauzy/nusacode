@@ -135,20 +135,23 @@ const TestimonialSection = () => {
           image:
             "https://i.pinimg.com/736x/8a/e9/e9/8ae9e92fa4e69967aa61bf2bda967b7b.jpg",
           content:
-            "The design principles a    nd modern tools covered in the roadmap helped me create better user experiences and land my dream design job.",
+            "The design principles and modern tools covered in the roadmap helped me create better user experiences and land my dream design job.",
         },
       ],
     },
   };
 
   const currentTranslation = translations[language];
-  const duplicatedTestimonials = [
+
+  // Duplicate testimonials 3 times for seamless loop
+  const tripleTestimonials = [
+    ...currentTranslation.testimonials,
     ...currentTranslation.testimonials,
     ...currentTranslation.testimonials,
   ];
 
   return (
-    <section className="bg-black py-20">
+    <section className=" py-20 bg-gray-700/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
@@ -159,15 +162,19 @@ const TestimonialSection = () => {
           </p>
         </div>
 
-        {/* Infinite Scroll */}
+        {/* Infinite Scroll Container */}
         <div className="relative overflow-hidden">
-          <div className="flex animate-scroll-left space-x-6">
-            {duplicatedTestimonials.map((testimonial, index) => (
+          {/* Gradient overlays for smooth edges */}
+          <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-[#090b0c] via-gray-700/10 to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-[#090b0c] via-gray-700/10 to-transparent z-10 pointer-events-none"></div>
+
+          <div className="flex animate-infinite-scroll">
+            {tripleTestimonials.map((testimonial, index) => (
               <div
                 key={`${testimonial.id}-${index}`}
-                className="flex-shrink-0 w-96 bg-gray-900 rounded-xl p-6 border border-gray-800 hover:border-blue-500 transition-colors duration-300"
+                className="flex-shrink-0 w-96 bg-gray-900 rounded-xl p-6 border border-gray-800 hover:border-blue-500 transition-colors duration-300 mx-3"
               >
-                {/* testimoni conten */}
+                {/* Testimonial content */}
                 <div className="mb-6">
                   <p className="text-gray-300 text-base leading-relaxed">
                     "{testimonial.content}"
@@ -208,27 +215,24 @@ const TestimonialSection = () => {
             ))}
           </div>
         </div>
-
-        {/* Gradient Overlays */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent pointer-events-none z-10"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent pointer-events-none z-10"></div>
       </div>
 
       <style>{`
-        @keyframes scroll-left {
+        @keyframes infinite-scroll {
           0% {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-50%);
+            transform: translateX(calc(-100% / 3));
           }
         }
         
-        .animate-scroll-left {
-          animation: scroll-left 30s linear infinite;
+        .animate-infinite-scroll {
+          animation: infinite-scroll 60s linear infinite;
+          width: calc(408px * 18); /* (396px card width + 12px margin) * 18 cards */
         }
         
-        .animate-scroll-left:hover {
+        .animate-infinite-scroll:hover {
           animation-play-state: paused;
         }
       `}</style>

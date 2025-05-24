@@ -3,6 +3,7 @@
 import { Carousel, Card } from "../ui/apple-cards-carousel";
 import { useLanguage } from "../context/LanguageContext";
 
+
 export function AppleCardsCarouselDemo() {
   const { language } = useLanguage();
 
@@ -14,11 +15,21 @@ export function AppleCardsCarouselDemo() {
 
   return (
     <div className="w-full h-full py-20">
-      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans">
-        {language === "id"
-          ? "Temukan Jalur Belajarmu di Dunia Teknologi."
-          : "Discover Your Learning Path in Tech."}
-      </h2>
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-8">
+          <h2 className="text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans mb-4 md:mb-0">
+            {language === "id"
+              ? "Temukan Jalur Belajarmu di Dunia Teknologi."
+              : "Discover Your Learning Path in Tech."}
+          </h2>
+          <a 
+            href="/roadmap"
+            className="text-lg font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline underline-offset-4 hover:underline-offset-2 transition-all duration-200"
+          >
+            {language === "id" ? "Lihat semua →" : "View all →"}
+          </a>
+        </div>
+      </div>
       <Carousel items={cards} />
     </div>
   );

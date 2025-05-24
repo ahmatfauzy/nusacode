@@ -28,7 +28,7 @@ type Card = {
   content: React.ReactNode;
 };
 
-// Definisikan ImageProps supaya tidak error
+
 interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   alt: string;
   src: string;
@@ -179,7 +179,6 @@ export const Card = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const { onCardClose } = useContext(CarouselContext);
 
-  // Gunakan useCallback supaya handleClose stabil dan bisa dimasukkan ke deps useEffect
   const handleClose = useCallback(() => {
     setOpen(false);
     onCardClose(index);
