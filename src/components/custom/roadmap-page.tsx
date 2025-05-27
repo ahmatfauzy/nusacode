@@ -82,7 +82,7 @@ export function RoadmapPage() {
               className="group cursor-pointer"
               onClick={() => handleSelectField(field.id)}
             >
-              <div className="relative h-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
+              <div className="relative h-full bg-white dark:bg-gray-600/10 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
                 {/* Gradient Background */}
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${field.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}

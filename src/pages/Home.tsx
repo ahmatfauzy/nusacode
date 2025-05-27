@@ -3,6 +3,7 @@ import { HeroSection } from "../components/custom/HeroSection";
 import { HeroWhy } from "../components/custom/HeroWhy";
 import { AppleCardsCarouselDemo } from "../components/custom/AppleCardsCarouselDemo";
 import TestimonialSection from "../components/custom/Testimoni";
+import CTA from "../components/custom/CTA";
 
 function Home() {
   return (
@@ -16,6 +17,7 @@ function Home() {
         <HeroWhy />
         <AppleCardsCarouselDemo />
         <TestimonialSection />
+        <CTA />
       </div>
 
 

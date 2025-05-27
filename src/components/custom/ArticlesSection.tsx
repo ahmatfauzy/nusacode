@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+"use client";
+
+import type React from "react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, Calendar, Clock, User, ArrowRight } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -151,97 +155,155 @@ const ArticlesSection: React.FC = () => {
 
   if (selectedArticle) {
     return (
-      <div className="min-h-screen bg-gray-900/10 text-white">
-        {/* Article Detail */}
-        <div className="container mx-auto px-6 py-22">
-          <button
-            onClick={() => setSelectedArticle(null)}
-            className="flex items-center text-blue-400 hover:text-blue-300 mb-8 transition-colors"
-          >
-            <ChevronLeft className="w-5 h-5 mr-2" />
-            {t.backToList}
-          </button>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key="article-detail"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.6 }}
+          className="min-h-screen bg-gray-900/10 text-white"
+        >
+          {/* Article Detail */}
+          <div className="container mx-auto px-6 py-22">
+            <motion.button
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              onClick={() => setSelectedArticle(null)}
+              className="flex items-center text-blue-400 hover:text-blue-300 mb-8 transition-colors group"
+            >
+              <ChevronLeft className="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" />
+              {t.backToList}
+            </motion.button>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-8">
-              <span className="inline-block bg-blue-600 text-white px-3 py-1 rounded-full text-sm mb-4">
-                {selectedArticle.category[language]}
-              </span>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                {selectedArticle.title[language]}
-              </h1>
+            <div className="max-w-4xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="mb-8"
+              >
+                <span className="inline-block bg-blue-600 text-white px-3 py-1 rounded-full text-sm mb-4">
+                  {selectedArticle.category[language]}
+                </span>
+                <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                  {selectedArticle.title[language]}
+                </h1>
 
-              <div className="flex flex-wrap items-center gap-6 text-gray-400 mb-8">
-                <div className="flex items-center">
-                  <User className="w-4 h-4 mr-2" />
-                  {t.by} {selectedArticle.author}
+                <div className="flex flex-wrap items-center gap-6 text-gray-400 mb-8">
+                  <div className="flex items-center">
+                    <User className="w-4 h-4 mr-2" />
+                    {t.by} {selectedArticle.author}
+                  </div>
+                  <div className="flex items-center">
+                    <Calendar className="w-4 h-4 mr-2" />
+                    {new Date(selectedArticle.date).toLocaleDateString(
+                      language === "id" ? "id-ID" : "en-US"
+                    )}
+                  </div>
+                  <div className="flex items-center">
+                    <Clock className="w-4 h-4 mr-2" />
+                    {selectedArticle.readTime} {t.minRead}
+                  </div>
                 </div>
-                <div className="flex items-center">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  {new Date(selectedArticle.date).toLocaleDateString(
-                    language === "id" ? "id-ID" : "en-US"
-                  )}
+              </motion.div>
+
+              <motion.img
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                src={selectedArticle.image}
+                alt={selectedArticle.title[language]}
+                className="w-full h-64 md:h-96 object-cover rounded-lg mb-8"
+              />
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="prose prose-invert prose-lg max-w-none"
+              >
+                <p className="text-xl leading-relaxed mb-8 text-gray-300">
+                  {selectedArticle.content[language]}
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="mt-12 pt-8 border-t border-gray-700"
+              >
+                <h3 className="text-xl font-semibold mb-4">{t.tags}</h3>
+                <div className="flex flex-wrap gap-2">
+                  {selectedArticle.tags.map((tag, index) => (
+                    <motion.span
+                      key={index}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: 0.7 + index * 0.1 }}
+                      className="bg-gray-800 text-gray-300 px-3 py-1 rounded-full text-sm hover:bg-gray-700 transition-colors"
+                    >
+                      {tag[language]}
+                    </motion.span>
+                  ))}
                 </div>
-                <div className="flex items-center">
-                  <Clock className="w-4 h-4 mr-2" />
-                  {selectedArticle.readTime} {t.minRead}
-                </div>
-              </div>
-            </div>
-
-            <img
-              src={selectedArticle.image}
-              alt={selectedArticle.title[language]}
-              className="w-full h-64 md:h-96 object-cover rounded-lg mb-8"
-            />
-
-            <div className="prose prose-invert prose-lg max-w-none">
-              <p className="text-xl leading-relaxed mb-8 text-gray-300">
-                {selectedArticle.content[language]}
-              </p>
-            </div>
-
-            <div className="mt-12 pt-8 border-t border-gray-700">
-              <h3 className="text-xl font-semibold mb-4">{t.tags}</h3>
-              <div className="flex flex-wrap gap-2">
-                {selectedArticle.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="bg-gray-800 text-gray-300 px-3 py-1 rounded-full text-sm"
-                  >
-                    {tag[language]}
-                  </span>
-                ))}
-              </div>
+              </motion.div>
             </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </AnimatePresence>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900/10 text-white">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className="min-h-screen bg-gray-900/10 text-white"
+    >
       {/* Header */}
       <div className="container mx-auto px-6 py-22 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6">{t.title}</h1>
-        <p className="text-xl text-gray-400 max-w-2xl mx-auto">{t.subtitle}</p>
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-5xl md:text-6xl font-bold mb-6"
+        >
+          {t.title}
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-xl text-gray-400 max-w-2xl mx-auto"
+        >
+          {t.subtitle}
+        </motion.p>
       </div>
 
       {/* Articles Grid */}
       <div className="container mx-auto px-6 pb-20">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {mockArticles.map((article) => (
-            <article
+          {mockArticles.map((article, index) => (
+            <motion.article
               key={article.id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+              whileHover={{ y: -5 }}
               className="bg-gray-600/10 rounded-lg overflow-hidden hover:transform hover:scale-105 transition-all duration-300 cursor-pointer group"
               onClick={() => setSelectedArticle(article)}
             >
               <div className="relative overflow-hidden">
-                <img
+                <motion.img
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
                   src={article.image}
                   alt={article.title[language]}
-                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                  className="w-full h-48 object-cover"
                 />
                 <div className="absolute top-4 left-4">
                   <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">
@@ -279,11 +341,11 @@ const ArticlesSection: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

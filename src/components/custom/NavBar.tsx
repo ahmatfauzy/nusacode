@@ -33,7 +33,7 @@ const translations = {
     home: "Beranda",
     roadmap: "Peta Belajar",
     articles: "Artikel",
-    about: "Tentang", 
+    about: "Tentang",
     search: "Cari",
     indonesia: "Indonesia",
     english: "Inggris",
@@ -41,7 +41,7 @@ const translations = {
   },
   en: {
     home: "Home",
-    roadmap: "RoadMap",
+    roadmap: "Roadmap",
     articles: "Articles",
     about: "About",
     search: "Search",
@@ -253,6 +253,7 @@ export function NavBar() {
           <MobileNavMenu
             isOpen={isMobileMenuOpen}
             onClose={() => setIsMobileMenuOpen(false)}
+            className="flex flex-col items-center text-center gap-6 px-4 py-6"
           >
             {getNavItems().map(
               (item: { name: string; link: string }, idx: number) => (
@@ -260,31 +261,33 @@ export function NavBar() {
                   key={`mobile-link-${idx}`}
                   href={item.link}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="relative text-neutral-600 dark:text-neutral-300"
+                  className="relative text-neutral-600 dark:text-neutral-300 text-lg"
                 >
                   <span className="block">{item.name}</span>
                 </a>
               )
             )}
-            <div className="flex w-full flex-col gap-4">
+
+            <div className="flex flex-col items-center w-full gap-4 mt-4">
               <NavbarButton
                 onClick={() => {
                   setIsMobileMenuOpen(false);
                   toggleSearch();
                 }}
                 variant="primary"
-                className="w-full flex justify-center items-center"
+                className="w-4/5 flex justify-center items-center"
               >
                 <IconSearch className="mr-2" size={18} />
                 {t("search")}
               </NavbarButton>
+
               <NavbarButton
                 onClick={() => {
                   setLanguage(language === "id" ? "en" : "id");
                   setIsMobileMenuOpen(false);
                 }}
                 variant="primary"
-                className="w-full"
+                className="w-4/5 flex justify-center"
               >
                 {language === "id" ? t("indonesia") : t("english")}
               </NavbarButton>
