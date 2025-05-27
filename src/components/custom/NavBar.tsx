@@ -134,10 +134,10 @@ export function NavBar() {
         language === "id"
           ? field.title.id.toLowerCase()
           : field.title.en.toLowerCase();
-      const descToSearch =
-        language === "id"
-          ? field.description.id.toLowerCase()
-          : field.description.en.toLowerCase();
+      // const descToSearch =
+      //   language === "id"
+      //     ? field.description.id.toLowerCase()
+      //     : field.description.en.toLowerCase();
 
       // Also search through steps content
       const stepsMatch = field.steps.some((step) => {
@@ -145,24 +145,23 @@ export function NavBar() {
           language === "id"
             ? step.title.id.toLowerCase()
             : step.title.en.toLowerCase();
-        const stepContent =
-          language === "id"
-            ? step.content.id.toLowerCase()
-            : step.content.en.toLowerCase();
-        const skillsMatch = step.skills.some((skill) =>
-          skill.toLowerCase().includes(query.toLowerCase())
-        );
+        // const stepContent =
+        //   language === "id"
+        //     ? step.content.id.toLowerCase()
+        //     : step.content.en.toLowerCase();
+        // const skillsMatch = step.skills.some((skill) =>
+        //   skill.toLowerCase().includes(query.toLowerCase())
+        // );
 
         return (
-          stepTitle.includes(query.toLowerCase()) ||
-          stepContent.includes(query.toLowerCase()) ||
-          skillsMatch
+          stepTitle.includes(query.toLowerCase()) 
+          // || stepContent.includes(query.toLowerCase())
         );
       });
 
       return (
         titleToSearch.includes(query.toLowerCase()) ||
-        descToSearch.includes(query.toLowerCase()) ||
+        // descToSearch.includes(query.toLowerCase()) ||
         stepsMatch
       );
     });

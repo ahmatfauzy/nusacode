@@ -669,42 +669,6 @@ export const techFields: TechField[] = [
       },
       {
         title: {
-          id: "2D Game Development",
-          en: "2D Game Development",
-        },
-        content: {
-          id: "Kuasai pengembangan game 2D menggunakan engines seperti Unity atau Godot.",
-          en: "Master 2D game development using engines like Unity or Godot.",
-        },
-        skills: [
-          "Unity 2D",
-          "Godot",
-          "Sprite Animation",
-          "Physics 2D",
-          "Game Programming",
-        ],
-        duration: "4-5 bulan",
-      },
-      {
-        title: {
-          id: "3D Game Development",
-          en: "3D Game Development",
-        },
-        content: {
-          id: "Dalami pengembangan game 3D, modeling, texturing, dan advanced graphics programming.",
-          en: "Dive into 3D game development, modeling, texturing, and advanced graphics programming.",
-        },
-        skills: [
-          "Unity 3D",
-          "Unreal Engine",
-          "3D Modeling",
-          "Texturing",
-          "Shader Programming",
-        ],
-        duration: "5-6 bulan",
-      },
-      {
-        title: {
           id: "AWS/Azure/GCP",
           en: "AWS/Azure/GCP",
         },
