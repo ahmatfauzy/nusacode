@@ -14,19 +14,14 @@ import { useState, useEffect, useRef } from "react";
 import { IconSearch, IconChevronDown, IconX } from "@tabler/icons-react";
 import { useLanguage } from "../context/LanguageContext";
 import { cn } from "../../lib/utils";
+import {
+  techFields,
+  type TechField,
+  // type RoadmapStep,
+} from "../context/roadmap-data";
 
-// Define the dataWisata type
-interface TourismData {
-  id: string;
-  nameId: string;
-  nameEn: string;
-  descId: string;
-  descEn: string;
-  image: string;
-  maps: string;
-}
-
-const dataWisata: TourismData[] = [];
+// Use the imported techFields data
+const roadmapData = techFields;
 
 const translations = {
   id: {
@@ -56,7 +51,7 @@ export function NavBar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<TourismData[]>([]);
+  const [searchResults, setSearchResults] = useState<TechField[]>([]);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { language, setLanguage } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -133,20 +128,42 @@ export function NavBar() {
       return;
     }
 
-    // Filter data
-    const filteredResults = dataWisata.filter((item) => {
-      const nameToSearch =
+    // Filter roadmap data
+    const filteredResults = roadmapData.filter((field) => {
+      const titleToSearch =
         language === "id"
-          ? item.nameId.toLowerCase()
-          : item.nameEn.toLowerCase();
+          ? field.title.id.toLowerCase()
+          : field.title.en.toLowerCase();
       const descToSearch =
         language === "id"
-          ? item.descId.toLowerCase()
-          : item.descEn.toLowerCase();
+          ? field.description.id.toLowerCase()
+          : field.description.en.toLowerCase();
+
+      // Also search through steps content
+      const stepsMatch = field.steps.some((step) => {
+        const stepTitle =
+          language === "id"
+            ? step.title.id.toLowerCase()
+            : step.title.en.toLowerCase();
+        const stepContent =
+          language === "id"
+            ? step.content.id.toLowerCase()
+            : step.content.en.toLowerCase();
+        const skillsMatch = step.skills.some((skill) =>
+          skill.toLowerCase().includes(query.toLowerCase())
+        );
+
+        return (
+          stepTitle.includes(query.toLowerCase()) ||
+          stepContent.includes(query.toLowerCase()) ||
+          skillsMatch
+        );
+      });
 
       return (
-        nameToSearch.includes(query.toLowerCase()) ||
-        descToSearch.includes(query.toLowerCase())
+        titleToSearch.includes(query.toLowerCase()) ||
+        descToSearch.includes(query.toLowerCase()) ||
+        stepsMatch
       );
     });
 
@@ -326,8 +343,8 @@ export function NavBar() {
               type="text"
               placeholder={
                 language === "id"
-                  ? "Cari destinasi wisata..."
-                  : "Search tourist destinations..."
+                  ? "Cari roadmap teknologi..."
+                  : "Search technology roadmaps..."
               }
               value={searchQuery}
               onChange={handleSearch}
@@ -353,47 +370,53 @@ export function NavBar() {
                 </p>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {searchResults.map((item: TourismData) => (
+                  {searchResults.map((field: TechField) => (
                     <div
-                      key={item.id}
+                      key={field.id}
                       className="border border-gray-700 rounded-lg overflow-hidden shadow-md bg-gray-800"
                     >
-                      <div className="relative h-40">
-                        <img
-                          src={item.image}
-                          alt={language === "id" ? item.nameId : item.nameEn}
-                          className="object-cover w-full h-full"
-                        />
+                      <div
+                        className={`h-20 bg-gradient-to-r ${field.color} flex items-center justify-center`}
+                      >
+                        <span className="text-4xl">{field.icon}</span>
                       </div>
                       <div className="p-4">
                         <h4 className="font-medium text-lg mb-2 text-white">
-                          {language === "id" ? item.nameId : item.nameEn}
+                          {language === "id" ? field.title.id : field.title.en}
                         </h4>
                         <p className="text-sm text-gray-300 mb-3 line-clamp-2">
-                          {language === "id" ? item.descId : item.descEn}
+                          {language === "id"
+                            ? field.description.id
+                            : field.description.en}
                         </p>
-                        <a
-                          href={item.maps}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-400 text-sm font-medium hover:underline inline-flex items-center"
-                        >
-                          {language === "id" ? "Lihat di Maps" : "View on Maps"}
-                          <svg
-                            className="w-4 h-4 ml-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-gray-400">
+                            {field.steps.length}{" "}
+                            {language === "id" ? "langkah" : "steps"}
+                          </span>
+                          <a
+                            href={`/roadmap/${field.id}`}
+                            className="text-blue-400 text-sm font-medium hover:underline inline-flex items-center"
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                            ></path>
-                          </svg>
-                        </a>
+                            {language === "id"
+                              ? "Lihat Detail"
+                              : "View Details"}
+                            <svg
+                              className="w-4 h-4 ml-1"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                              ></path>
+                            </svg>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   ))}
