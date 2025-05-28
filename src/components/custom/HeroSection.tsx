@@ -1,8 +1,11 @@
-"use client";
-import { useLanguage } from "../context/LanguageContext";
+"use client"
+
+import { motion } from "motion/react"
+import { ArrowRight, Code, Zap, Users, BookOpen } from "lucide-react"
+import { useLanguage } from "../context/LanguageContext"
 
 export function HeroSection() {
-  const { language } = useLanguage();
+  const { language } = useLanguage()
 
   // Content for both languages
   const heroContent = {
@@ -12,10 +15,15 @@ export function HeroSection() {
         "Temukan alur belajar terstruktur untuk menjadi Web Developer, DevOps, Mobile Developer, dan banyak lagi. Semua dalam satu tempat.",
       cta: "Lihat Roadmap",
       features: [
-        "Visual Interaktif",
-        "Materi Terorganisir",
-        "Bebas & Gratis",
-        "Update Berkala",
+        { icon: Code, text: "Visual Interaktif" },
+        { icon: BookOpen, text: "Materi Terorganisir" },
+        { icon: Zap, text: "Bebas & Gratis" },
+        { icon: Users, text: "Update Berkala" },
+      ],
+      stats: [
+        { number: "50+", label: "Roadmap" },
+        { number: "100K+", label: "Developer" },
+        { number: "24/7", label: "Akses" },
       ],
     },
     en: {
@@ -24,116 +32,184 @@ export function HeroSection() {
         "Discover structured learning paths to become a Web Developer, DevOps, Mobile Developer, and more — all in one place.",
       cta: "View Roadmap",
       features: [
-        "Interactive Visuals",
-        "Organized Materials",
-        "Free & Open",
-        "Regularly Updated",
+        { icon: Code, text: "Interactive Visuals" },
+        { icon: BookOpen, text: "Organized Materials" },
+        { icon: Zap, text: "Free & Open" },
+        { icon: Users, text: "Regularly Updated" },
+      ],
+      stats: [
+        { number: "50+", label: "Roadmaps" },
+        { number: "100K+", label: "Developers" },
+        { number: "24/7", label: "Access" },
       ],
     },
-  };
+  }
 
-  // Get content based on current language
-  const content = language === "id" ? heroContent.id : heroContent.en;
-
-  // Add console log for debugging
-  console.log("HeroSection rendering, language:", language);
+  const content = language === "id" ? heroContent.id : heroContent.en
 
   return (
-    <section
-      className="w-full py-15 text-white overflow-hidden border-t border-gray-800 md:py-15"
-      style={{ marginTop: "2rem", background: "transparent" }}
-    >
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <section className="relative w-full min-h-screen text-white overflow-hidden lg:flex lg:items-center lg:pt-10">
+      {/* Background - keeping original transparent style */}
+      <div className="absolute inset-0" style={{ background: "transparent" }} />
+
+      {/* Subtle background effects - very minimal */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse delay-1000" />
+      </div>
+      <div className="container mx-auto px-4 md:px-6 relative z-10 w-full py-8 lg:py-0 lg:h-full lg:flex lg:items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full pt-16 pb-8 lg:pt-0 lg:pb-0">
           {/* Left Column - Text Content */}
-          <div className="flex flex-col space-y-6">
-            <div className="space-y-2">
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-                {content.title}
-              </h1>
-              <p className="text-xl text-gray-300">{content.subtitle}</p>
-            </div>
-
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col space-y-6 order-1"
+          >
+            {/* Title */}
             <div className="space-y-4">
-              <ul className="grid grid-cols-2 gap-x-6 gap-y-2">
-                {content.features.map((feature, index) => (
-                  <li key={index} className="flex items-center">
-                    <svg
-                      className="w-5 h-5 mr-2 text-blue-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent"
+              >
+                {content.title}
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-base md:text-lg text-gray-300 leading-relaxed max-w-2xl"
+              >
+                {content.subtitle}
+              </motion.p>
             </div>
 
-            <div className="pt-4">
-              <a
+            {/* Features Grid */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="grid grid-cols-2 gap-3"
+            >
+              {content.features.map((feature, index) => {
+                const IconComponent = feature.icon
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                    className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300"
+                  >
+                    <IconComponent className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                    <span className="text-sm font-medium">{feature.text}</span>
+                  </motion.div>
+                )
+              })}
+            </motion.div>
+
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.0 }}
+              className="flex flex-wrap gap-6 py-3"
+            >
+              {content.stats.map((stat, index) => (
+                <div key={index} className=" text-center">
+                  <div className="text-xl  md:text-2xl font-bold text-blue-400">{stat.number}</div>
+                  <div className="text-xs text-gray-400">{stat.label}</div>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* CTA Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+              className="pt-2"
+            >
+              <motion.a
                 href="/roadmap"
-                className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 group"
               >
                 {content.cta}
-                <svg
-                  className="w-5 h-5 ml-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </a>
-            </div>
-          </div>
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </motion.a>
+            </motion.div>
+          </motion.div>
 
-          {/* Right Column - Image */}
-          <div className="relative h-full flex items-center justify-center">
+          {/* Right Column - Illustration */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="relative flex items-center justify-center order-2 mt-15 lg:mt-0 mb-8 lg:mb-0"
+          >
             <div className="relative w-full max-w-lg">
-              {/* Image container without background */}
-              <div className="relative rounded-lg overflow-hidden shadow-xl">
+              {/* Main Image Container */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, delay: 0.6 }}
+                className="relative rounded-2xl overflow-hidden shadow-2xl"
+              >
                 <img
-                  src="/Programming-bro.svg"
-                  alt={
-                    language === "id"
-                      ? "Ilustrasi pengembangan web"
-                      : "Web development illustration"
-                  }
+                  src="https://i.pinimg.com/736x/ae/49/39/ae49390647f774e1f9ebb56147ac2e82.jpg"
+                  alt={language === "id" ? "Ilustrasi pengembangan web" : "Web development illustration"}
                   className="w-full h-auto"
                 />
-              </div>
+              </motion.div>
 
-              {/* Floating code snippets - closer to the image */}
-              <div className="absolute top-2 right-2 bg-transparent p-1 rounded shadow-lg transform rotate-3 z-10 block">
-                <pre className="text-[11px] text-blue-400 bg-gray-900 p-2 rounded-md">
-                  <code>{`function hello() {\n  return "world";\n}`}</code>
-                </pre>
-              </div>
+              {/* Floating Code Snippets */}
+              <motion.div
+                initial={{ opacity: 0, y: -20, rotate: 0 }}
+                animate={{ opacity: 1, y: 0, rotate: 3 }}
+                transition={{ duration: 0.8, delay: 1.0 }}
+                className="absolute top-6 -right-2 lg:top-2 lg:-right-4 z-20"
+              >
+                <div className="bg-gray-900/90 backdrop-blur-sm p-2 rounded-lg shadow-xl border border-blue-500/30">
+                  <pre className="text-[10px] text-blue-400 font-mono">
+                    <code>{`function hello() {\n  return "world";\n}`}</code>
+                  </pre>
+                </div>
+              </motion.div>
 
-              <div className="absolute bottom-2 left-2 bg-transparent p-1 rounded shadow-lg transform -rotate-3 z-10 block">
-                <pre className="text-[11px] text-green-400 bg-gray-900 p-2 rounded-md">
-                  <code>{`<div className="hero">\n  Hello World!\n</div>`}</code>
-                </pre>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, y: 20, rotate: 0 }}
+                animate={{ opacity: 1, y: 0, rotate: -3 }}
+                transition={{ duration: 0.8, delay: 1.2 }}
+                className="absolute -bottom-2 -left-2 lg:-bottom-4 lg:-left-4 z-20"
+              >
+                <div className="bg-gray-900/90 backdrop-blur-sm p-2 rounded-lg shadow-xl border border-green-500/30">
+                  <pre className="text-[10px] text-green-400 font-mono">
+                    <code>{`<div className="hero">\n  Hello World!\n</div>`}</code>
+                  </pre>
+                </div>
+              </motion.div>
+
+              {/* Floating Elements */}
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                className="absolute top-1/4 -left-8 w-16 h-16 bg-blue-500/10 rounded-full blur-xl"
+              />
+
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 1 }}
+                className="absolute bottom-1/4 -right-8 w-12 h-12 bg-purple-500/10 rounded-full blur-xl"
+              />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
-  );
+  )
 }
