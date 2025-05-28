@@ -122,8 +122,8 @@ const About = () => {
         <div>
           <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
             {language === "id"
-              ? "Mencapai 10,000+ siswa aktif dan meluncurkan program sertifikasi. Membuka kantor baru dan memperluas tim ke seluruh Indonesia."
-              : "Reached 10,000+ active students and launched certification program. Opened new offices and expanded team across Indonesia."}
+              ? "Mencapai 10,000+ siswa aktif. Membuka kantor baru dan memperluas tim ke seluruh Indonesia."
+              : "Reached 10,000+ active students. Opened new offices and expanded team across Indonesia."}
           </p>
           <img
             src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
@@ -282,7 +282,7 @@ const About = () => {
                 </p>
               </div>
               <img
-                src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                src="https://i.pinimg.com/736x/7e/eb/f5/7eebf5652dbf2f07ed5a857a9c8d2bde.jpg"
                 width={500}
                 height={500}
                 alt="innovation"
