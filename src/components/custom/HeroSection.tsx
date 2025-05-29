@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { motion } from "motion/react"
-import { ArrowRight, Code, Zap, Users, BookOpen } from "lucide-react"
-import { useLanguage } from "../context/LanguageContext"
+import { motion } from "motion/react";
+import { ArrowRight, Code, Zap, Users, BookOpen } from "lucide-react";
+import { useLanguage } from "../context/LanguageContext";
 
 export function HeroSection() {
-  const { language } = useLanguage()
+  const { language } = useLanguage();
 
   // Content for both languages
   const heroContent = {
@@ -21,8 +21,8 @@ export function HeroSection() {
         { icon: Users, text: "Update Berkala" },
       ],
       stats: [
-        { number: "50+", label: "Roadmap" },
-        { number: "100K+", label: "Developer" },
+        { number: "20+", label: "Roadmap" },
+        { number: "100K+", label: "Pengguna" },
         { number: "24/7", label: "Akses" },
       ],
     },
@@ -38,14 +38,14 @@ export function HeroSection() {
         { icon: Users, text: "Regularly Updated" },
       ],
       stats: [
-        { number: "50+", label: "Roadmaps" },
-        { number: "100K+", label: "Developers" },
+        { number: "20+", label: "Roadmaps" },
+        { number: "100K+", label: "Users" },
         { number: "24/7", label: "Access" },
       ],
     },
-  }
+  };
 
-  const content = language === "id" ? heroContent.id : heroContent.en
+  const content = language === "id" ? heroContent.id : heroContent.en;
 
   return (
     <section className="relative w-full min-h-screen text-white overflow-hidden lg:flex lg:items-center lg:pt-10">
@@ -95,7 +95,7 @@ export function HeroSection() {
               className="grid grid-cols-2 gap-3"
             >
               {content.features.map((feature, index) => {
-                const IconComponent = feature.icon
+                const IconComponent = feature.icon;
                 return (
                   <motion.div
                     key={index}
@@ -107,7 +107,7 @@ export function HeroSection() {
                     <IconComponent className="w-4 h-4 text-blue-400 flex-shrink-0" />
                     <span className="text-sm font-medium">{feature.text}</span>
                   </motion.div>
-                )
+                );
               })}
             </motion.div>
 
@@ -120,7 +120,9 @@ export function HeroSection() {
             >
               {content.stats.map((stat, index) => (
                 <div key={index} className=" text-center">
-                  <div className="text-xl  md:text-2xl font-bold text-blue-400">{stat.number}</div>
+                  <div className="text-xl  md:text-2xl font-bold text-blue-400">
+                    {stat.number}
+                  </div>
                   <div className="text-xs text-gray-400">{stat.label}</div>
                 </div>
               ))}
@@ -162,7 +164,11 @@ export function HeroSection() {
               >
                 <img
                   src="https://i.pinimg.com/736x/ae/49/39/ae49390647f774e1f9ebb56147ac2e82.jpg"
-                  alt={language === "id" ? "Ilustrasi pengembangan web" : "Web development illustration"}
+                  alt={
+                    language === "id"
+                      ? "Ilustrasi pengembangan web"
+                      : "Web development illustration"
+                  }
                   className="w-full h-auto"
                 />
               </motion.div>
@@ -197,13 +203,22 @@ export function HeroSection() {
               {/* Floating Elements */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                transition={{
+                  duration: 3,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
                 className="absolute top-1/4 -left-8 w-16 h-16 bg-blue-500/10 rounded-full blur-xl"
               />
 
               <motion.div
                 animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 1 }}
+                transition={{
+                  duration: 4,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                  delay: 1,
+                }}
                 className="absolute bottom-1/4 -right-8 w-12 h-12 bg-purple-500/10 rounded-full blur-xl"
               />
             </div>
@@ -211,5 +226,5 @@ export function HeroSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
