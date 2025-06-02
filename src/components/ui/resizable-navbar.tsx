@@ -237,7 +237,7 @@ export const NavbarLogo = () => {
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-lg font-normal text-black"
     >
       <img
-        src="/logo-putih.png"
+        src="/NusaCode-logo.png"
         alt="logo"
         width={35}
         height={35}

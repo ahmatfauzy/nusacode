@@ -35,7 +35,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
         {/* logo */}
         <div className="flex items-center gap-2 text-neutral-700 dark:text-neutral-200">
-          <img className="h-8" src="/logo-putih.png" alt="Logo" />
+          <img className="h-8" src="/NusaCode-logo.png" alt="Logo" />
           <span className="text-lg font-semibold">Nusa Code</span>
         </div>
 
