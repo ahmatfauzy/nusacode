@@ -1,54 +1,55 @@
-import React, { useState, useEffect } from "react";
+"use client"
 
-const ScrollToTopButton: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
+import type React from "react"
+import { useState, useEffect } from "react"
+import { ArrowUp } from "lucide-react"
+
+interface ScrollToTopButtonProps {
+  isChatOpen?: boolean
+}
+
+const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = () => {
+  const [isVisible, setIsVisible] = useState(false)
 
   const toggleVisibility = () => {
     if (window.scrollY > 300) {
-      setIsVisible(true);
+      setIsVisible(true)
     } else {
-      setIsVisible(false);
+      setIsVisible(false)
     }
-  };
+  }
 
   useEffect(() => {
-    window.addEventListener("scroll", toggleVisibility);
-    return () => window.removeEventListener("scroll", toggleVisibility);
-  }, []);
+    window.addEventListener("scroll", toggleVisibility)
+    return () => window.removeEventListener("scroll", toggleVisibility)
+  }, [])
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
-    });
-  };
+    })
+  }
+
+  // Dynamic positioning - always to the left of chat button
+  const getPositionClasses = () => {
+    // Always position to the left of the chat button with proper spacing
+    return "bottom-6 right-24"
+  }
 
   return (
     <>
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="z-12 fixed bottom-8 right-8 p-3 rounded-full bg-gray-900/10 text-white shadow-xl ring-2 ring-white hover:bg-gray-600/10 transition-all duration-300 transform hover:scale-110 focus:outline-none"
+          className={`fixed w-14 h-14 bg-gray-800 hover:bg-gray-700 text-white rounded-full shadow-lg transition-all duration-300 flex items-center justify-center z-45 border border-gray-600 ${getPositionClasses()}`}
           aria-label="Scroll to top"
         >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M5 10l7-7m0 0l7 7m-7-7v18"
-            />
-          </svg>
+          <ArrowUp size={24} />
         </button>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ScrollToTopButton;
+export default ScrollToTopButton
