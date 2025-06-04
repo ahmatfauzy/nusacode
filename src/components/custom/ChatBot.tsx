@@ -49,6 +49,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
     };
   }, [isOpen, onChatStateChange]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
