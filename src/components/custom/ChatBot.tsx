@@ -49,7 +49,6 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
     };
   }, [isOpen, onChatStateChange]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
@@ -177,7 +176,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
           </div>
 
           {/* Input */}
-          <form className="p-4 border-t border-gray-700">
+          <form className="p-4 border-t border-gray-700" onSubmit={handleSubmit}>
             <div className="flex gap-2 items-end">
               <input className="flex-1 ..." />
               <button className="w-10 h-10 p-2 flex items-center justify-center ...">
