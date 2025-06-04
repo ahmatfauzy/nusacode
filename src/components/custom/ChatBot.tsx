@@ -120,7 +120,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
       {isOpen && (
         <div
           ref={chatRef}
-          className="fixed bottom-24 right-6 w-96 h-[500px] bg-gray-900 border border-gray-700 rounded-lg shadow-2xl z-40 flex flex-col max-w-[calc(100vw-2rem)] sm:max-w-96"
+          className="fixed bottom-24 right-4 left-4 sm:right-6 sm:left-auto sm:w-96 max-w-[calc(100vw-2rem)] h-[500px] bg-gray-900 border border-gray-700 rounded-lg shadow-2xl z-40 flex flex-col overflow-hidden"
         >
           {/* Header */}
           <div className="bg-blue-600 text-white p-4 rounded-t-lg">
@@ -176,23 +176,10 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
           </div>
 
           {/* Input */}
-          <form
-            onSubmit={handleSubmit}
-            className="p-4 border-t border-gray-700"
-          >
-            <div className="flex space-x-2">
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Tanyakan tentang roadmap teknologi..."
-                className="flex-1 bg-gray-700 text-white border border-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                disabled={isLoading}
-              />
-              <button
-                type="submit"
-                disabled={isLoading || !input.trim()}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white p-2 rounded-lg transition-colors"
-              >
+          <form className="p-4 border-t border-gray-700">
+            <div className="flex gap-2 items-end">
+              <input className="flex-1 ..." />
+              <button className="w-10 h-10 p-2 flex items-center justify-center ...">
                 <Send size={16} />
               </button>
             </div>
