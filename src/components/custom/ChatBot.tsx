@@ -171,13 +171,13 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
 
           {/* Input */}
           <form
-            className="p-4 border-t border-gray-700 bg-gray-900"
+            className="p-4 border-t border-gray-700 bg-gray-900 box-border"
             onSubmit={handleSubmit}
           >
-            <div className="flex gap-2 items-end">
+            <div className="flex gap-2 items-end overflow-hidden">
               <input
                 type="text"
-                className="flex-1 bg-gray-700 text-white text-sm px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="min-w-0 flex-1 bg-gray-700 text-white text-sm px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ketik pesan..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
