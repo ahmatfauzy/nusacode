@@ -1,35 +1,35 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useRef, useEffect } from "react"
-import { MessageCircle, X, Send } from "lucide-react"
+import type React from "react";
+import { useState, useRef, useEffect } from "react";
+import { MessageCircle, X, Send } from "lucide-react";
 
 interface Message {
-  id: string
-  role: "user" | "assistant"
-  content: string
+  id: string;
+  role: "user" | "assistant";
+  content: string;
 }
 
 interface ChatBotProps {
-  onChatStateChange?: (isOpen: boolean) => void
+  onChatStateChange?: (isOpen: boolean) => void;
 }
 
 const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const chatRef = useRef<HTMLDivElement>(null)
-  const buttonRef = useRef<HTMLButtonElement>(null)
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const chatRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // Get backend URL from environment variable
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001"
+  const BACKEND_URL = import.meta.env.VITE_API_CHAT_URL;
 
   const toggleChat = () => {
-    const newState = !isOpen
-    setIsOpen(newState)
-    onChatStateChange?.(newState)
-  }
+    const newState = !isOpen;
+    setIsOpen(newState);
+    onChatStateChange?.(newState);
+  };
 
   // Handle click outside to close chat
   useEffect(() => {
@@ -41,30 +41,30 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
         !chatRef.current.contains(event.target as Node) &&
         !buttonRef.current.contains(event.target as Node)
       ) {
-        setIsOpen(false)
-        onChatStateChange?.(false)
+        setIsOpen(false);
+        onChatStateChange?.(false);
       }
-    }
+    };
 
-    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [isOpen, onChatStateChange])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, onChatStateChange]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!input.trim() || isLoading) return
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
       content: input,
-    }
+    };
 
-    setMessages((prev) => [...prev, userMessage])
-    setInput("")
-    setIsLoading(true)
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setIsLoading(true);
 
     try {
       // Using backend URL from environment variable
@@ -79,55 +79,59 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
             content: msg.content,
           })),
         }),
-      })
+      });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        console.error("API Error:", errorData)
-        throw new Error(`HTTP error! status: ${response.status}`)
+        const errorData = await response.json().catch(() => ({}));
+        console.error("API Error:", errorData);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json()
+      const data = await response.json();
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
         content: data.content || data.message, // Handle both response formats
-      }
+      };
 
-      setMessages((prev) => [...prev, assistantMessage])
+      setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
-      console.error("Chat error:", error)
-      
-      let errorText = "Maaf, terjadi kesalahan. Silakan coba lagi."
-      
+      console.error("Chat error:", error);
+
+      let errorText = "Maaf, terjadi kesalahan. Silakan coba lagi.";
+
       // More specific error messages
       if (error instanceof Error) {
-        if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
-          errorText = `Tidak dapat terhubung ke server. Pastikan backend berjalan di ${BACKEND_URL}`
+        if (
+          error.message.includes("Failed to fetch") ||
+          error.message.includes("NetworkError")
+        ) {
+          errorText = `Tidak dapat terhubung ke server. Pastikan backend berjalan di ${BACKEND_URL}`;
         } else if (error.message.includes("429")) {
-          errorText = "Terlalu banyak permintaan. Silakan tunggu sebentar dan coba lagi."
+          errorText =
+            "Terlalu banyak permintaan. Silakan tunggu sebentar dan coba lagi.";
         }
       }
-      
+
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
         content: errorText,
-      }
-      setMessages((prev) => [...prev, errorMessage])
+      };
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   // Debug info in development
   useEffect(() => {
     if (import.meta.env.DEV) {
-      console.log("🔧 ChatBot Backend URL:", BACKEND_URL)
-      console.log("🌍 Environment:", import.meta.env.MODE)
+      console.log("🔧 ChatBot Backend URL:", BACKEND_URL);
+      console.log("🌍 Environment:", import.meta.env.MODE);
     }
-  }, [BACKEND_URL])
+  }, [BACKEND_URL]);
 
   return (
     <>
@@ -175,10 +179,17 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
             )}
 
             {messages.map((message) => (
-              <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div
+                key={message.id}
+                className={`flex ${
+                  message.role === "user" ? "justify-end" : "justify-start"
+                }`}
+              >
                 <div
                   className={`max-w-[85%] sm:max-w-[80%] p-3 rounded-lg text-sm break-words ${
-                    message.role === "user" ? "bg-blue-600 text-white" : "bg-gray-700 text-gray-100"
+                    message.role === "user"
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-700 text-gray-100"
                   }`}
                 >
                   {message.content}
@@ -190,7 +201,9 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
               <div className="flex justify-start">
                 <div className="bg-gray-700 text-gray-100 p-3 rounded-lg text-sm">
                   <div className="flex items-center space-x-2">
-                    <div className="animate-pulse">NusaBot sedang mengetik...</div>
+                    <div className="animate-pulse">
+                      NusaBot sedang mengetik...
+                    </div>
                   </div>
                 </div>
               </div>
@@ -198,7 +211,10 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
           </div>
 
           {/* Input */}
-          <form onSubmit={handleSubmit} className="p-4 border-t border-gray-700 bg-gray-900">
+          <form
+            onSubmit={handleSubmit}
+            className="p-4 border-t border-gray-700 bg-gray-900"
+          >
             <div className="flex gap-2 items-end">
               <input
                 value={input}
@@ -219,7 +235,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default ChatBot
+export default ChatBot;
