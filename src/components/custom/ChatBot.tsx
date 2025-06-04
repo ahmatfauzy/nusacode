@@ -28,7 +28,6 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
     onChatStateChange?.(newState);
   };
 
-  // Handle click outside to close chat
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -64,7 +63,6 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
     setIsLoading(true);
 
     try {
-      // Now using main /api/chat endpoint
       const response = await fetch(import.meta.env.VITE_API_CHAT_URL, {
         method: "POST",
         headers: {
@@ -87,7 +85,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: data.content || data.message, // Handle both response formats
+        content: data.content || data.message,
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
@@ -164,22 +162,31 @@ const ChatBot: React.FC<ChatBotProps> = ({ onChatStateChange }) => {
 
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-gray-700 text-gray-100 p-3 rounded-lg text-sm">
-                  <div className="flex items-center space-x-2">
-                    <div className="animate-pulse">
-                      NusaBot sedang mengetik...
-                    </div>
-                  </div>
+                <div className="bg-gray-700 text-gray-100 p-3 rounded-lg text-sm animate-pulse">
+                  NusaBot sedang mengetik...
                 </div>
               </div>
             )}
           </div>
 
           {/* Input */}
-          <form className="p-4 border-t border-gray-700" onSubmit={handleSubmit}>
+          <form
+            className="p-4 border-t border-gray-700 bg-gray-900"
+            onSubmit={handleSubmit}
+          >
             <div className="flex gap-2 items-end">
-              <input className="flex-1 ..." />
-              <button className="w-10 h-10 p-2 flex items-center justify-center ...">
+              <input
+                type="text"
+                className="flex-1 bg-gray-700 text-white text-sm px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Ketik pesan..."
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+              />
+              <button
+                type="submit"
+                className="min-w-[40px] min-h-[40px] p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md flex items-center justify-center"
+                disabled={isLoading}
+              >
                 <Send size={16} />
               </button>
             </div>
