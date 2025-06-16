@@ -19,14 +19,14 @@ export default function Footer() {
       roadmap: "Peta Belajar",
       articles: "Artikel",
       about: "Tentang",
-      copyright: "ICONFEST 2025",
+      copyright: "EDUFAIR 2025",
     },
     en: {
       home: "Home",
       roadmap: "Roadmap",
       articles: "Articles",
       about: "About",
-      copyright: "iCONFEST 2025",
+      copyright: "EDUFAIR 2025",
     },
   };
 
